@@ -15,7 +15,9 @@ public class VoitureService {
         this.voitureRepository = voitureRepository;
     }
     
-
+    public Voiture save(Voiture voiture) {
+        return voitureRepository.save(voiture);
+    }
     // Create or Update a Voiture
     public Voiture saveVoiture(Voiture voiture) {
         return voitureRepository.save(voiture);

@@ -6,7 +6,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
 import java.util.Date;
+import java.util.HashSet;
+
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,7 +33,8 @@ public class Voiture {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_disponibilite;
 
-    protected String photo;
+    private String photo;
+    
 
     public long getId_voiture() {
         return id_voiture;
@@ -74,5 +82,21 @@ public class Voiture {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    @ManyToMany
+    @JoinTable(
+        name = "voiture_option",
+        joinColumns = @JoinColumn(name = "voiture_id"),
+        inverseJoinColumns = @JoinColumn(name = "option_id")
+    )
+    private Set<Options> options = new HashSet<>();
+
+    public Set<Options> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<Options> options) {
+        this.options = options;
     }
 }
